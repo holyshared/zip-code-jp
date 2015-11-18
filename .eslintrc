@@ -1,0 +1,13 @@
+{
+  "ecmaFeatures": {
+    "modules": true
+  },
+  "rules": {
+    "semi": 2,
+    "strict": 2
+  },
+  "env": {
+    "node": true,
+    "es6": true
+  }
+}
