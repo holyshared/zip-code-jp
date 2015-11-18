@@ -32,7 +32,7 @@ const PREFECTURE_DICT = [
   '宮崎県',   '鹿児島県', '沖縄県'
 ];
 
-const properties = {
+const PROPERTIES = {
   0: 'prefecture',
   1: 'city',
   2: 'area',
