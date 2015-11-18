@@ -58,7 +58,13 @@ export default class AddressResolver {
     this.cacheManager = new CacheManager(adapter);
   }
   find(code) {
-    const prefix = code.substr(0, 3);
+    const postalCode = code || '';
+
+    if (postalCode.length < 7) {
+      return Promise.resolve(null);
+    }
+
+    const prefix = postalCode.substr(0, 3);
     const file = path.join(__dirname, '/../json', 'zip-' + prefix + '.json');
 
     return new Promise((resolve, reject) => {
@@ -69,11 +75,11 @@ export default class AddressResolver {
 
         const dict = JSON.parse(content);
 
-        if (!dict[code]) {
+        if (!dict[postalCode]) {
           throw new NotFoundError('Address could not be found');
         }
 
-        const addresses = dict[code];
+        const addresses = dict[postalCode];
 
         let result = Object.create(emptyResult);
 
