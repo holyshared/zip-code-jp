@@ -93,4 +93,14 @@ export default class AddressResolver {
       return result;
     });
   }
+
+  verifyCode(code) {
+    const postalCode = code || '';
+
+    if (postalCode.length < 7) {
+      return Promise.resolve(null);
+    }
+    return Promise.resolve(postalCode);
+  }
+
 }
