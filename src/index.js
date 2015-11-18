@@ -2,6 +2,12 @@ import fs from 'fs';
 import path from 'path';
 import { Promise } from 'bluebird';
 
+export class NotFoundError extends Error {
+  constructor() {
+    super(arguments);
+  }
+}
+
 export class CacheAdapter {
   constructor() {
   }
@@ -39,6 +45,14 @@ const PROPERTIES = {
   3: 'street'
 };
 
+let result = {};
+
+Object.keys(PROPERTIES).forEach((k) => {
+  result[k] = null;
+});
+
+const emptyResult = result;
+
 export default class AddressResolver {
   construct(adapter) {
     this.cacheManager = new CacheManager(adapter);
@@ -54,12 +68,17 @@ export default class AddressResolver {
         }
 
         const dict = JSON.parse(content);
+
+        if (!dict[code]) {
+          throw new NotFoundError('Address could not be found');
+        }
+
         const addresses = dict[code];
 
-        let result = {};
+        let result = Object.create(emptyResult);
 
         addresses.forEach((val, i) => {
-          const key = properties[i];
+          const key = PROPERTIES[i];
 
           if (i === 0) {
             result[key] = PREFECTURE_DICT[val];
