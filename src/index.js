@@ -53,6 +53,8 @@ Object.keys(PROPERTIES).forEach((k) => {
 
 const emptyResult = result;
 
+const readFile = Promise.promisify(fs.readFile);
+
 export default class AddressResolver {
   construct(adapter) {
     this.cacheManager = new CacheManager(adapter);
@@ -67,33 +69,28 @@ export default class AddressResolver {
     const prefix = postalCode.substr(0, 3);
     const file = path.join(__dirname, '/../json', 'zip-' + prefix + '.json');
 
-    return new Promise((resolve, reject) => {
-      fs.readFile(file, (err, content) => {
-        if (err) {
-          return reject(err);
+    return readFile(file).then((content) => {
+      const dict = JSON.parse(content);
+
+      if (!dict[postalCode]) {
+        throw new NotFoundError('Address could not be found');
+      }
+
+      const addresses = dict[postalCode];
+
+      let result = Object.create(emptyResult);
+
+      addresses.forEach((val, i) => {
+        const key = PROPERTIES[i];
+
+        if (i === 0) {
+          result[key] = PREFECTURE_DICT[val];
+        } else {
+          result[key] = val;
         }
-
-        const dict = JSON.parse(content);
-
-        if (!dict[postalCode]) {
-          throw new NotFoundError('Address could not be found');
-        }
-
-        const addresses = dict[postalCode];
-
-        let result = Object.create(emptyResult);
-
-        addresses.forEach((val, i) => {
-          const key = PROPERTIES[i];
-
-          if (i === 0) {
-            result[key] = PREFECTURE_DICT[val];
-          } else {
-            result[key] = val;
-          }
-        });
-        resolve(result);
       });
+
+      return result;
     });
   }
 }
