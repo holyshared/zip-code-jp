@@ -55,8 +55,41 @@ const emptyResult = result;
 
 const readFile = Promise.promisify(fs.readFile);
 
+class ResolvedResult {
+  constructor(prefecture, city, area, street = null) {
+    this.prefecture = prefecture;
+    this.city = city;
+    this.area = area;
+    this.street = street;
+  }
+  static fromObject(object) {
+    return new ResolvedResult(
+      object.prefecture,
+      object.city,
+      object.area,
+      object.street
+    );
+  }
+  static fromArray(addresses) {
+    let result = Object.create(emptyResult);
+
+    addresses.forEach((val, i) => {
+      const key = PROPERTIES[i];
+
+      if (i === 0) {
+        result[key] = PREFECTURE_DICT[val];
+      } else {
+        result[key] = val;
+      }
+    });
+
+    return ResolvedResult.fromObject(result);
+  }
+}
+
+
 export default class AddressResolver {
-  construct(adapter) {
+  constructor(adapter) {
     this.cacheManager = new CacheManager(adapter);
   }
   find(code) {
@@ -78,19 +111,7 @@ export default class AddressResolver {
 
       const addresses = dict[postalCode];
 
-      let result = Object.create(emptyResult);
-
-      addresses.forEach((val, i) => {
-        const key = PROPERTIES[i];
-
-        if (i === 0) {
-          result[key] = PREFECTURE_DICT[val];
-        } else {
-          result[key] = val;
-        }
-      });
-
-      return result;
+      return ResolvedResult.fromArray(addresses);
     });
   }
 
