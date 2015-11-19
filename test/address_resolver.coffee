@@ -10,14 +10,24 @@ describe 'AddressResolver', ->
 
     context 'when run twice the same code', ->
       beforeEach ->
-        adapter = new cache.MemoryCacheAdapter
-        @resolver = new AddressResolver adapter
-      it 'returns address', ->
+        @adapter =
+          codePrefixes: []
+          addressDicts: {}
+
+          find: (prefix) ->
+            @codePrefixes.push prefix
+            Promise.resolve null
+          store: (prefix, dict) ->
+            @addressDicts[prefix] = dict
+
+        @resolver = new AddressResolver @adapter
+      it 'returns address from cache', ->
         Promise.bind(@).then ->
           Promise.all([
             @resolver.find('0010933')
             @resolver.find('0010933')
           ])
         .spread (result1, result2) ->
-          assert.ok result1.prefecture == '北海道'
-          assert.ok result2.prefecture == '北海道'
+          assert.ok @adapter.codePrefixes[0] == '001'
+          assert.ok @adapter.codePrefixes[1] == '001'
+          assert.ok @adapter.addressDicts['001'] != undefined
