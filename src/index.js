@@ -2,12 +2,18 @@ import fs from 'fs';
 import path from 'path';
 import { Promise } from 'bluebird';
 import { CacheManager, MemoryCacheAdapter, CacheAdapter } from './cache';
+import { CacheableDictionaryLoader, DictionaryLoader } from './dictionary-loader';
 import { NotFoundError } from './error';
 
 export const cache = {
   CacheManager: CacheManager,
   CacheAdapter: CacheAdapter,
   MemoryCacheAdapter: MemoryCacheAdapter
+};
+
+export const dict = {
+  DictionaryLoader: DictionaryLoader,
+  CacheableDictionaryLoader: CacheableDictionaryLoader
 };
 
 const PREFECTURE_DICT = [
@@ -72,10 +78,9 @@ export class ResolvedResult {
   }
 }
 
-
 export default class AddressResolver {
   constructor(adapter = new MemoryCacheAdapter()) {
-    this.cacheManager = new CacheManager(adapter);
+    this.dictLoader = new CacheableDictionaryLoader(adapter);
   }
   find(code) {
     return Promise.bind(this).then(() => {
@@ -95,37 +100,13 @@ export default class AddressResolver {
   loadAddressByCode(postalCode) {
     const prefix = postalCode.substr(0, 3);
 
-    return this.loadAddressDictionary(prefix).then((dict) => {
+    return this.dictLoader.loadFromPrefix(prefix).then((dict) => {
       if (!dict[postalCode]) {
         throw new NotFoundError('Address could not be found');
       }
 
       const addresses = dict[postalCode];
       return ResolvedResult.fromArray(addresses);
-    });
-  }
-  loadAddressDictionary(prefix) {
-    return Promise.bind(this).then(() => {
-      return this.loadAddressDictionaryFromCache(prefix);
-    }).then((dict) => {
-      if (dict) {
-        return dict;
-      }
-      return this.loadAddressDictionaryFromFile(prefix);
-    });
-  }
-  loadAddressDictionaryFromCache(prefix) {
-    return this.cacheManager.find(prefix);
-  }
-  loadAddressDictionaryFromFile(prefix) {
-    const file = path.join(__dirname, '/../json', 'zip-' + prefix + '.json');
-
-    return Promise.bind(this).then(() => {
-      return readFile(file);
-    }).then((content) => {
-      const dict = JSON.parse(content);
-      this.cacheManager.store(prefix, dict);
-      return dict;
     });
   }
   emptyResult() {
