@@ -5,6 +5,7 @@
   "main": "lib/index.js",
   "files": [
     "lib/**/*.js",
+    "example/**/*.js",
     "json/**/*.json",
     "README.md"
   ],
