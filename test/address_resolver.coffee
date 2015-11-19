@@ -8,6 +8,13 @@ describe 'AddressResolver', ->
         @resolver.find('0010933').then (result) ->
           assert.ok result.prefecture == '北海道'
 
+    context 'when first lookup', ->
+      beforeEach ->
+        @resolver = new AddressResolver
+      it 'returns address', ->
+        @resolver.find('00').then (result) ->
+          assert.ok result == null
+
     context 'when run twice the same code', ->
       beforeEach ->
         @adapter =

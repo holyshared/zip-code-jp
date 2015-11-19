@@ -39,7 +39,8 @@ const PROPERTIES = {
 let result = {};
 
 Object.keys(PROPERTIES).forEach((k) => {
-  result[k] = null;
+  const key = PROPERTIES[k];
+  result[key] = null;
 });
 
 const emptyResult = result;
@@ -62,7 +63,7 @@ export class ResolvedResult {
     );
   }
   static fromArray(addresses) {
-    let result = Object.create(emptyResult);
+    let result = ResolvedResult.emptyResult();
 
     addresses.forEach((val, i) => {
       const key = PROPERTIES[i];
@@ -75,6 +76,9 @@ export class ResolvedResult {
     });
 
     return ResolvedResult.fromObject(result);
+  }
+  static emptyResult() {
+    return Object.create(emptyResult);
   }
 }
 
