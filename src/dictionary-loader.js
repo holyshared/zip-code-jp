@@ -35,7 +35,12 @@ export class CacheableDictionaryLoader extends DictionaryLoader {
     return Promise.bind(this).then(() => {
       return readFile(file);
     }).then((content) => {
-      const dict = JSON.parse(content);
+      let dict = null;
+      try {
+        dict = JSON.parse(content);
+      } catch (err) {
+        return Promise.reject(err);
+      }
       this.cacheManager.store(prefix, dict);
       return dict;
     });
