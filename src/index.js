@@ -2,12 +2,7 @@ import fs from 'fs';
 import path from 'path';
 import { Promise } from 'bluebird';
 import { CacheManager } from './cache';
-
-export class NotFoundError extends Error {
-  constructor() {
-    super(arguments);
-  }
-}
+import { NotFoundError } from './error';
 
 const PREFECTURE_DICT = [
   null,       '北海道',   '青森県',   '岩手県',   '宮城県',
