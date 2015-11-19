@@ -90,6 +90,14 @@ export default class AddressResolver {
   constructor(adapter = new MemoryCacheAdapter()) {
     this.dictLoader = new CacheableDictionaryLoader(adapter);
   }
+
+  /**
+   * Find the address from the postal code
+   *
+   * @param {string} code
+   * @return Promise<Object>
+   * @throws {AddressNotFoundError} Thrown if the address is not found
+   */
   find(code) {
     return Promise.bind(this).then(() => {
       return this.verifyCode(code);

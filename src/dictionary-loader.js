@@ -6,6 +6,12 @@ import { CacheManager } from './cache';
 const readFile = Promise.promisify(fs.readFile);
 
 export class DictionaryLoader {
+  /**
+   * Search the dictionary from the cache
+   *
+   * @param {string} prefix
+   * @return Promise<Object>
+   */
   loadFromPrefix(prefix) {
     throw new Error('Please refer to the implementation to examine the cache.');
   }
@@ -16,6 +22,13 @@ export class CacheableDictionaryLoader extends DictionaryLoader {
     super()
     this.cacheManager = new CacheManager(adapter);
   }
+
+  /**
+   * Search the dictionary from the cache
+   *
+   * @param {string} prefix
+   * @return Promise<Object>
+   */
   loadFromPrefix(prefix) {
     return Promise.bind(this).then(() => {
       return this.loadAddressDictionaryFromCache(prefix);
