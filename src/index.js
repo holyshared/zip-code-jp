@@ -1,27 +1,11 @@
 import fs from 'fs';
 import path from 'path';
 import { Promise } from 'bluebird';
+import { CacheManager } from './cache';
 
 export class NotFoundError extends Error {
   constructor() {
     super(arguments);
-  }
-}
-
-export class CacheAdapter {
-  constructor() {
-  }
-}
-
-export class FileCacheAdapter extends CacheAdapter {
-  constructor() {
-    super();
-  }
-}
-
-export class CacheManager {
-  constructor(adapter) {
-    this.adapter = adapter;
   }
 }
 
