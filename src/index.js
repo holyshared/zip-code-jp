@@ -114,8 +114,11 @@ export default class AddressResolver {
   loadAddressDictionaryFromFile(prefix) {
     const file = path.join(__dirname, '/../json', 'zip-' + prefix + '.json');
 
-    return readFile(file).then((content) => {
+    return Promise.bind(this).then(() => {
+      return readFile(file);
+    }).then((content) => {
       const dict = JSON.parse(content);
+      this.cacheManager.store(prefix, dict);
       return dict;
     });
   }
