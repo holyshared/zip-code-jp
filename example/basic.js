@@ -1,8 +1,8 @@
 'use strict';
 
-var AddpressResolver = require('../lib').default;
-var resolver = new AddpressResolver();
+var AddressResolver = require('../lib').default;
+var resolver = new AddressResolver();
 
-resolver.find('0010933').then(function(res) {
+resolver.find('001-0933').then(function(res) {
   console.log(res);
 });
