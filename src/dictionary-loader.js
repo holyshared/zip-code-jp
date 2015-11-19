@@ -41,8 +41,8 @@ export class CacheableDictionaryLoader extends DictionaryLoader {
       } catch (err) {
         return Promise.reject(err);
       }
-      this.cacheManager.store(prefix, dict);
-      return dict;
+      const returnValue = () => Promise.resolve(dict);
+      return this.cacheManager.store(prefix, dict).then(returnValue);
     });
   }
 }

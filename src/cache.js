@@ -21,6 +21,7 @@ export class MemoryCacheAdapter extends CacheAdapter {
   }
   store(prefix, dict) {
     this.dicts[prefix] = dict;
+    return Promise.resolve();
   }
 }
 

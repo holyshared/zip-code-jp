@@ -42,6 +42,7 @@ describe 'AddressResolver', ->
             Promise.resolve result
           store: (prefix, dict) ->
             @addressDicts[prefix] = dict
+            Promise.resolve()
 
         @resolver = new AddressResolver @adapter
       it 'returns address from cache', ->
