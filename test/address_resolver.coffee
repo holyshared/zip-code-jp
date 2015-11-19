@@ -15,7 +15,7 @@ describe 'AddressResolver', ->
         @resolver.find('00').then (result) ->
           assert.ok result == null
 
-    context 'when the postal code is short', ->
+    context 'when the postal code not found', ->
       beforeEach ->
         @error = error.AddressNotFoundError
         @resolver = new AddressResolver
@@ -27,13 +27,19 @@ describe 'AddressResolver', ->
 
     context 'when run twice the same code', ->
       beforeEach ->
+        dict =
+          '0010933': [1,"札幌市北区","新川西三条"]
+
         @adapter =
+          called: 0
           codePrefixes: []
           addressDicts: {}
 
           find: (prefix) ->
             @codePrefixes.push prefix
-            Promise.resolve null
+            result = if @called > 0 then dict else null
+            @called++
+            Promise.resolve result
           store: (prefix, dict) ->
             @addressDicts[prefix] = dict
 
