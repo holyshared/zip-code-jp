@@ -1,8 +1,14 @@
 import fs from 'fs';
 import path from 'path';
 import { Promise } from 'bluebird';
-import { CacheManager, MemoryCacheAdapter } from './cache';
+import { CacheManager, MemoryCacheAdapter, CacheAdapter } from './cache';
 import { NotFoundError } from './error';
+
+export const cache = {
+  CacheManager: CacheManager,
+  CacheAdapter: CacheAdapter,
+  MemoryCacheAdapter: MemoryCacheAdapter
+};
 
 const PREFECTURE_DICT = [
   null,       '北海道',   '青森県',   '岩手県',   '宮城県',
