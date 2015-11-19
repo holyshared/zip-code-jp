@@ -3,11 +3,6 @@ import path from 'path';
 import { Promise } from 'bluebird';
 import { CacheManager, MemoryCacheAdapter, CacheAdapter } from './cache';
 import { CacheableDictionaryLoader, DictionaryLoader } from './dictionary-loader';
-import { NotFoundError } from './error';
-
-export const error = {
-  AddressNotFoundError: NotFoundError
-};
 
 export const cache = {
   CacheManager: CacheManager,
@@ -118,9 +113,8 @@ export default class AddressResolver {
 
     return this.dictLoader.loadFromPrefix(prefix).then((dict) => {
       if (!dict[postalCode]) {
-        throw new NotFoundError('Address could not be found');
+        return this.emptyResult();
       }
-
       const addresses = dict[postalCode];
       return ResolvedResult.fromArray(addresses);
     });

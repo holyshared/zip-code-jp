@@ -17,13 +17,10 @@ describe 'AddressResolver', ->
 
     context 'when the postal code not found', ->
       beforeEach ->
-        @error = error.AddressNotFoundError
         @resolver = new AddressResolver
       it 'returns null value', ->
         @resolver.find('0049999').then (result) ->
-          Promise.reject(new Error('Faild test!!'))
-        .caught @error, (err) ->
-          assert.ok err.message != null
+          assert.ok result == null
 
     context 'when run twice the same code', ->
       beforeEach ->
