@@ -104,7 +104,7 @@ export default class AddressResolver {
     });
   }
   verifyCode(code) {
-    const postalCode = code || '';
+    const postalCode = (code || '').replace(/-/, '');
     const result = (postalCode.length < 7) ? false : true;
     return Promise.resolve(result);
   }

@@ -46,7 +46,7 @@ describe 'AddressResolver', ->
         Promise.bind(@).then ->
           Promise.all([
             @resolver.find('0010933')
-            @resolver.find('0010933')
+            @resolver.find('001-0933')
           ])
         .spread (result1, result2) ->
           assert.ok @adapter.codePrefixes[0] == '001'
