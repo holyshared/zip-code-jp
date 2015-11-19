@@ -99,7 +99,7 @@ export default class AddressResolver {
       if (!postalCode) {
         return this.emptyResult();
       }
-      return this.loadByCode(postalCode);
+      return this.loadAddressByCode(postalCode);
     });
   }
   verifyCode(code) {
@@ -110,7 +110,7 @@ export default class AddressResolver {
     }
     return Promise.resolve(postalCode);
   }
-  loadByCode(postalCode) {
+  loadAddressByCode(postalCode) {
     const prefix = postalCode.substr(0, 3);
     const file = path.join(__dirname, '/../json', 'zip-' + prefix + '.json');
 
