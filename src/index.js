@@ -93,12 +93,24 @@ export default class AddressResolver {
     this.cacheManager = new CacheManager(adapter);
   }
   find(code) {
+    return Promise.bind(this).then(() => {
+      return this.verifyCode(code);
+    }).then(function(postalCode) {
+      if (!postalCode) {
+        return this.emptyResult();
+      }
+      return this.loadByCode(postalCode);
+    });
+  }
+  verifyCode(code) {
     const postalCode = code || '';
 
     if (postalCode.length < 7) {
       return Promise.resolve(null);
     }
-
+    return Promise.resolve(postalCode);
+  }
+  loadByCode(postalCode) {
     const prefix = postalCode.substr(0, 3);
     const file = path.join(__dirname, '/../json', 'zip-' + prefix + '.json');
 
@@ -110,18 +122,10 @@ export default class AddressResolver {
       }
 
       const addresses = dict[postalCode];
-
       return ResolvedResult.fromArray(addresses);
     });
   }
-
-  verifyCode(code) {
-    const postalCode = code || '';
-
-    if (postalCode.length < 7) {
-      return Promise.resolve(null);
-    }
-    return Promise.resolve(postalCode);
+  emptyResult() {
+    return Promise.resolve(null);
   }
-
 }
