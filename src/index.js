@@ -34,7 +34,7 @@ const emptyResult = result;
 
 const readFile = Promise.promisify(fs.readFile);
 
-class ResolvedResult {
+export class ResolvedResult {
   constructor(prefecture, city, area, street = null) {
     this.prefecture = prefecture;
     this.city = city;
