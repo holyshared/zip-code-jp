@@ -78,11 +78,6 @@ export default class AddressResolver {
       if (!passed) {
         return this.emptyResult();
       }
-      return this.loadAddressFromCache(code);
-    }).then((result) => {
-      if (result) {
-        return Promise.resolve(result);
-      }
       return this.loadAddressByCode(code);
     });
   }
@@ -91,22 +86,37 @@ export default class AddressResolver {
     const result = (postalCode.length < 7) ? false : true;
     return Promise.resolve(result);
   }
-  loadAddressFromCache(postalCode) {
-    return this.cacheManager.find(postalCode);
-  }
   loadAddressByCode(postalCode) {
     const prefix = postalCode.substr(0, 3);
-    const file = path.join(__dirname, '/../json', 'zip-' + prefix + '.json');
 
-    return readFile(file).then((content) => {
-      const dict = JSON.parse(content);
-
+    return this.loadAddressDictionary(prefix).then((dict) => {
       if (!dict[postalCode]) {
         throw new NotFoundError('Address could not be found');
       }
 
       const addresses = dict[postalCode];
       return ResolvedResult.fromArray(addresses);
+    });
+  }
+  loadAddressDictionary(prefix) {
+    return Promise.bind(this).then(() => {
+      return this.loadAddressDictionaryFromCache(prefix);
+    }).then((dict) => {
+      if (dict) {
+        return dict;
+      }
+      return this.loadAddressDictionaryFromFile(prefix);
+    });
+  }
+  loadAddressDictionaryFromCache(prefix) {
+    return this.cacheManager.find(prefix);
+  }
+  loadAddressDictionaryFromFile(prefix) {
+    const file = path.join(__dirname, '/../json', 'zip-' + prefix + '.json');
+
+    return readFile(file).then((content) => {
+      const dict = JSON.parse(content);
+      return dict;
     });
   }
   emptyResult() {
