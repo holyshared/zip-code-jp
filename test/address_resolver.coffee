@@ -15,6 +15,16 @@ describe 'AddressResolver', ->
         @resolver.find('00').then (result) ->
           assert.ok result == null
 
+    context 'when the postal code is short', ->
+      beforeEach ->
+        @error = error.AddressNotFoundError
+        @resolver = new AddressResolver
+      it 'returns null value', ->
+        @resolver.find('0049999').then (result) ->
+          Promise.reject(new Error('Faild test!!'))
+        .caught @error, (err) ->
+          assert.ok err.message != null
+
     context 'when run twice the same code', ->
       beforeEach ->
         @adapter =

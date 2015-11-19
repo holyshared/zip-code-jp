@@ -5,6 +5,10 @@ import { CacheManager, MemoryCacheAdapter, CacheAdapter } from './cache';
 import { CacheableDictionaryLoader, DictionaryLoader } from './dictionary-loader';
 import { NotFoundError } from './error';
 
+export const error = {
+  AddressNotFoundError: NotFoundError
+};
+
 export const cache = {
   CacheManager: CacheManager,
   CacheAdapter: CacheAdapter,
