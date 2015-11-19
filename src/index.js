@@ -1,7 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 import { Promise } from 'bluebird';
-import { CacheManager } from './cache';
+import { CacheManager, MemoryCacheAdapter } from './cache';
 import { NotFoundError } from './error';
 
 const PREFECTURE_DICT = [
@@ -68,26 +68,31 @@ class ResolvedResult {
 
 
 export default class AddressResolver {
-  constructor(adapter) {
+  constructor(adapter = new MemoryCacheAdapter()) {
     this.cacheManager = new CacheManager(adapter);
   }
   find(code) {
     return Promise.bind(this).then(() => {
       return this.verifyCode(code);
-    }).then(function(postalCode) {
-      if (!postalCode) {
+    }).then(function(passed) {
+      if (!passed) {
         return this.emptyResult();
       }
-      return this.loadAddressByCode(postalCode);
+      return this.loadAddressFromCache(code);
+    }).then((result) => {
+      if (result) {
+        return Promise.resolve(result);
+      }
+      return this.loadAddressByCode(code);
     });
   }
   verifyCode(code) {
     const postalCode = code || '';
-
-    if (postalCode.length < 7) {
-      return Promise.resolve(null);
-    }
-    return Promise.resolve(postalCode);
+    const result = (postalCode.length < 7) ? false : true;
+    return Promise.resolve(result);
+  }
+  loadAddressFromCache(postalCode) {
+    return this.cacheManager.find(postalCode);
   }
   loadAddressByCode(postalCode) {
     const prefix = postalCode.substr(0, 3);
