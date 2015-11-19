@@ -96,17 +96,21 @@ export default class AddressResolver {
   find(code) {
     return Promise.bind(this).then(() => {
       return this.verifyCode(code);
-    }).then(function(passed) {
-      if (!passed) {
+    }).then(function(result) {
+      if (!result.passed) {
         return this.emptyResult();
       }
-      return this.loadAddressByCode(code);
+      return this.loadAddressByCode(result.postalCode);
     });
   }
   verifyCode(code) {
     const postalCode = (code || '').replace(/-/, '');
     const result = (postalCode.length < 7) ? false : true;
-    return Promise.resolve(result);
+
+    return Promise.resolve({
+      passed: result,
+      postalCode: postalCode
+    });
   }
   loadAddressByCode(postalCode) {
     const prefix = postalCode.substr(0, 3);
