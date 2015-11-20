@@ -36,7 +36,13 @@ export class MemoryCacheAdapter extends CacheAdapter {
    * @return Promise<Object>
    */
   find(prefix) {
-    return Promise.resolve(null);
+    const dict = this.dicts[prefix];
+
+    if (!dict) {
+      return Promise.resolve(null);
+    }
+
+    return Promise.resolve(dict);
   }
 
   /**
