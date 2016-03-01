@@ -1,6 +1,6 @@
 {
   "name": "postal-code-jp",
-  "version": "0.2.6",
+  "version": "0.2.5",
   "description": "Address search from postal code for Japanese",
   "main": "lib/index.js",
   "files": [
