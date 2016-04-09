@@ -1,7 +1,7 @@
 {
-  "name": "postal-code-jp",
-  "version": "0.2.5",
-  "description": "Address search from postal code for Japanese",
+  "name": "zip-code-jp",
+  "version": "0.2.6",
+  "description": "Address search from zip code for japanese",
   "main": "lib/index.js",
   "files": [
     "lib/**/*.js",
@@ -10,21 +10,20 @@
     "README.md"
   ],
   "scripts": {
-    "test": "multi='dot=- mocha-istanbul=-' ISTANBUL_REPORTERS='text-summary,lcovonly' ./node_modules/.bin/mocha test",
-    "instrument": "node_modules/.bin/istanbul instrument lib -o lib-cov",
+    "test": "istanbul cover _mocha",
     "build": "./node_modules/.bin/babel -d lib -s inline src",
     "watch": "./node_modules/.bin/babel -d lib -s inline -w src"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/holyshared/postal-code-jp.git"
+    "url": "git+https://github.com/holyshared/zip-code-jp.git"
   },
   "author": "Noritaka Horio <holy.shared.design@gmail.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/holyshared/postal-code-jp/issues"
+    "url": "https://github.com/holyshared/zip-code-jp/issues"
   },
-  "homepage": "https://github.com/holyshared/postal-code-jp#readme",
+  "homepage": "https://github.com/holyshared/zip-code-jp#readme",
   "dependencies": {
     "bluebird": "^3.0.6",
     "es6-error": "^2.0.2"
@@ -38,8 +37,6 @@
     "espower-coffee": "^1.0.1",
     "istanbul": "^0.4.1",
     "mocha": "^2.3.3",
-    "mocha-istanbul": "^0.2.0",
-    "mocha-multi": "^0.9.0",
     "power-assert": "^1.1.0"
   }
 }

@@ -1,0 +1,16 @@
+verbose: false
+instrumentation:
+  root: 'lib'
+  default-excludes: true
+  excludes: [ 'coverage' ]
+  embed-source: false
+  variable: __coverage__
+  compact: true
+  preserve-comments: false
+  complete-copy: false
+  save-baseline: false
+reporting:
+  print: summary
+  reports:
+    - lcovonly
+  dir: ./coverage
