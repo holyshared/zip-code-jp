@@ -1,7 +1,7 @@
 {
-  "name": "postal-code-jp",
-  "version": "0.2.5",
-  "description": "Address search from postal code for Japanese",
+  "name": "zip-code-jp",
+  "version": "0.2.6",
+  "description": "Address search from zip code for japanese",
   "main": "lib/index.js",
   "files": [
     "lib/**/*.js",
@@ -17,14 +17,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/holyshared/postal-code-jp.git"
+    "url": "git+https://github.com/holyshared/zip-code-jp.git"
   },
   "author": "Noritaka Horio <holy.shared.design@gmail.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/holyshared/postal-code-jp/issues"
+    "url": "https://github.com/holyshared/zip-code-jp/issues"
   },
-  "homepage": "https://github.com/holyshared/postal-code-jp#readme",
+  "homepage": "https://github.com/holyshared/zip-code-jp#readme",
   "dependencies": {
     "bluebird": "^3.0.6",
     "es6-error": "^2.0.2"
