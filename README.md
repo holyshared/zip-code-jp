@@ -103,5 +103,4 @@ resolver.find('0010933').then((address) => {
 次のコマンドで、テストを実行できます。
 
 	npm install
-	npm run instrument
 	npm test
