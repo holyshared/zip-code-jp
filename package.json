@@ -10,8 +10,7 @@
     "README.md"
   ],
   "scripts": {
-    "test": "multi='dot=- mocha-istanbul=-' ISTANBUL_REPORTERS='text-summary,lcovonly' ./node_modules/.bin/mocha test",
-    "instrument": "node_modules/.bin/istanbul instrument lib -o lib-cov",
+    "test": "istanbul cover _mocha",
     "build": "./node_modules/.bin/babel -d lib -s inline src",
     "watch": "./node_modules/.bin/babel -d lib -s inline -w src"
   },
@@ -38,8 +37,6 @@
     "espower-coffee": "^1.0.1",
     "istanbul": "^0.4.1",
     "mocha": "^2.3.3",
-    "mocha-istanbul": "^0.2.0",
-    "mocha-multi": "^0.9.0",
     "power-assert": "^1.1.0"
   }
 }
