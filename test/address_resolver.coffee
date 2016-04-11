@@ -8,14 +8,14 @@ describe 'AddressResolver', ->
         @resolver.find('0010933').then (result) ->
           assert.ok result.prefecture == '北海道'
 
-    context 'when the postal code is short', ->
+    context 'when the zip code is short', ->
       beforeEach ->
         @resolver = new AddressResolver
       it 'returns null value', ->
         @resolver.find('00').then (result) ->
           assert.ok result == null
 
-    context 'when the postal code not found', ->
+    context 'when the zip code not found', ->
       beforeEach ->
         @resolver = new AddressResolver
       it 'returns null value', ->
