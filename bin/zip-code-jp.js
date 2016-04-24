@@ -1,1 +1,1 @@
-require('../lib/dictionary-generator');
+require('../lib/cli');

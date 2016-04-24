@@ -29,6 +29,8 @@
   "homepage": "https://github.com/holyshared/zip-code-jp#readme",
   "dependencies": {
     "bluebird": "^3.0.6",
+    "commander": "^2.9.0",
+    "docopt": "^0.6.2",
     "es6-error": "^2.0.2"
   },
   "devDependencies": {
