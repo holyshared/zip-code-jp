@@ -3,6 +3,9 @@
   "version": "0.2.9",
   "description": "Address search from zip code for japanese",
   "main": "lib/index.js",
+  "bin": {
+    "zip-code-jp": "bin/zip-code-jp.js"
+  },
   "files": [
     "lib/**/*.js",
     "example/**/*.js",
