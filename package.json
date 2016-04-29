@@ -13,7 +13,7 @@
     "test": "istanbul cover _mocha",
     "build": "./node_modules/.bin/babel -d lib -s inline src",
     "watch": "./node_modules/.bin/babel -d lib -s inline -w src",
-    "index": "node lib/cli.js -o json"
+    "index": "make clean && make build"
   },
   "repository": {
     "type": "git",
