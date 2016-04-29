@@ -26,7 +26,7 @@ export class CacheAdapter {
 export class MemoryCacheAdapter extends CacheAdapter {
   constructor() {
     super();
-    this.dicts = {};
+    this.cache = new Map();
   }
 
   /**
@@ -36,7 +36,7 @@ export class MemoryCacheAdapter extends CacheAdapter {
    * @return Promise<Object>
    */
   find(prefix) {
-    const dict = this.dicts[prefix];
+    const dict = this.cache.get(prefix);
 
     if (!dict) {
       return Promise.resolve(null);
@@ -53,7 +53,7 @@ export class MemoryCacheAdapter extends CacheAdapter {
    * @return Promise<void>
    */
   store(prefix, dict) {
-    this.dicts[prefix] = dict;
+    this.cache.set(prefix, dict);
     return Promise.resolve();
   }
 }

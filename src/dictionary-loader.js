@@ -30,9 +30,7 @@ export class CacheableDictionaryLoader extends DictionaryLoader {
    * @return Promise<Object>
    */
   loadFromPrefix(prefix) {
-    return Promise.bind(this).then(() => {
-      return this.loadAddressDictionaryFromCache(prefix);
-    }).then((dict) => {
+    return this.loadAddressDictionaryFromCache(prefix).then((dict) => {
       if (dict) {
         return dict;
       }
@@ -45,9 +43,7 @@ export class CacheableDictionaryLoader extends DictionaryLoader {
   loadAddressDictionaryFromFile(prefix) {
     const file = path.join(__dirname, '/../json', 'zip-' + prefix + '.json');
 
-    return Promise.bind(this).then(() => {
-      return readFile(file);
-    }).then((content) => {
+    return readFile(file).then((content) => {
       let dict = null;
       try {
         dict = JSON.parse(content);
