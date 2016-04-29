@@ -57,9 +57,7 @@ export default class AddressResolver {
    * @throws {AddressNotFoundError} Thrown if the address is not found
    */
   find(code) {
-    return Promise.bind(this).then(() => {
-      return this.verifyCode(code);
-    }).then(function(result) {
+    return this.verifyCode(code).then((result) =>　{
       if (!result.passed) {
         return this.emptyResult();
       }
