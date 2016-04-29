@@ -1,5 +1,5 @@
 import program from 'commander';
-import default as Application from './dictionary-generator';
+import Application from './dictionary-generator';
 
 program
   .version('0.1.0')
