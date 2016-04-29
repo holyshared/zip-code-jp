@@ -12,7 +12,8 @@
   "scripts": {
     "test": "istanbul cover _mocha",
     "build": "./node_modules/.bin/babel -d lib -s inline src",
-    "watch": "./node_modules/.bin/babel -d lib -s inline -w src"
+    "watch": "./node_modules/.bin/babel -d lib -s inline -w src",
+    "index": "make clean && make build"
   },
   "repository": {
     "type": "git",
@@ -37,6 +38,8 @@
     "espower-coffee": "^1.0.1",
     "istanbul": "^0.4.3",
     "mocha": "^2.4.5",
-    "power-assert": "^1.3.1"
+    "power-assert": "^1.3.1",
+    "zip-code-jp-stream": "^0.3.0",
+    "commander": "^2.9.0"
   }
 }
