@@ -25,11 +25,11 @@ import AddressResolver from 'zip-code-jp';
 
 const resolver = new AddressResolver();
 
-resolver.find('0010933').then((address) => {
-  console.log(address.prefecture); // 都道府県
-  console.log(address.city); // 市区町村名
-  console.log(address.area); // 町域名
-  console.log(address.street); // 番地
+resolver.find('0010933').then((results) => {
+  console.log(results[0].prefecture); // 都道府県
+  console.log(results[0].city); // 市区町村名
+  console.log(results[0].area); // 町域名
+  console.log(results[0].street); // 番地
 });
 ```
 
@@ -45,11 +45,11 @@ import { cache } from 'zip-code-jp';
 const memoryAdapter = new cache.MemoryCacheAdapter();
 const resolver = new AddressResolver(memoryAdapter);
 
-resolver.find('0010933').then((address) => {
-  console.log(address.prefecture); // 都道府県
-  console.log(address.city); // 市区町村名
-  console.log(address.area); // 町域名
-  console.log(address.street); // 番地
+resolver.find('0010933').then((results) => {
+  console.log(results[0].prefecture); // 都道府県
+  console.log(results[0].city); // 市区町村名
+  console.log(results[0].area); // 町域名
+  console.log(results[0].street); // 番地
 });
 ```
 
@@ -92,11 +92,11 @@ class CustomAdapter extends cache.CacheAdapter {
 
 const resolver = new AddressResolver(new CustomAdapter());
 
-resolver.find('0010933').then((address) => {
-  console.log(address.prefecture); // 都道府県
-  console.log(address.city); // 市区町村名
-  console.log(address.area); // 町域名
-  console.log(address.street); // 番地
+resolver.find('0010933').then((results) => {
+  console.log(results[0].prefecture); // 都道府県
+  console.log(results[0].city); // 市区町村名
+  console.log(results[0].area); // 町域名
+  console.log(results[0].street); // 番地
 });
 ```
 
