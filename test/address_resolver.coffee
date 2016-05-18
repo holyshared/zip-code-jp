@@ -5,8 +5,8 @@ describe 'AddressResolver', ->
       beforeEach ->
         @resolver = new AddressResolver
       it 'returns address', ->
-        @resolver.find('0010933').then (result) ->
-          assert.ok result.prefecture == '北海道'
+        @resolver.find('0010933').then (results) ->
+          assert.ok results[0].prefecture == '北海道'
 
     context 'when the zip code is short', ->
       beforeEach ->
@@ -24,7 +24,7 @@ describe 'AddressResolver', ->
 
     context 'when run twice the same code', ->
       beforeEach ->
-        dict =
+        address =
           '0010933': [1,"札幌市北区","新川西三条"]
 
         @adapter =
@@ -34,7 +34,7 @@ describe 'AddressResolver', ->
 
           find: (prefix) ->
             @codePrefixes.push prefix
-            result = if @called > 0 then dict else null
+            result = if @called > 0 then address else null
             @called++
             Promise.resolve result
           store: (prefix, dict) ->

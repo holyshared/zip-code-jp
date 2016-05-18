@@ -12,6 +12,6 @@ describe 'MemoryCacheAdapter', ->
       .then (dict2) ->
         @dict2 = dict2
 
-      it 'returns dictionary of address', ->
-        assert.ok @dict1 == null
-        assert.ok @dict2 != null
+    it 'returns dictionary of address', ->
+      assert.ok @dict1 == null
+      assert.ok @dict2 != null
