@@ -24,8 +24,17 @@ describe 'AddressResolver', ->
 
     context 'when run twice the same code', ->
       beforeEach ->
-        address =
-          '0010933': [1,"札幌市北区","新川西三条"]
+        a1 =
+          prefecture: "北海道"
+          city: "札幌市厚別区"
+          area: ""
+        a2 =
+          prefecture: "北海道"
+          city: "札幌市清田区"
+          area: ""
+
+        addresses =
+          "0040000": [ a1, a2 ]
 
         @adapter =
           called: 0
@@ -34,7 +43,7 @@ describe 'AddressResolver', ->
 
           find: (prefix) ->
             @codePrefixes.push prefix
-            result = if @called > 0 then address else null
+            result = if @called > 0 then addresses else null
             @called++
             Promise.resolve result
           store: (prefix, dict) ->
@@ -42,13 +51,14 @@ describe 'AddressResolver', ->
             Promise.resolve()
 
         @resolver = new AddressResolver @adapter
+
       it 'returns address from cache', ->
         Promise.bind(@).then ->
           Promise.all([
-            @resolver.find('0010933')
-            @resolver.find('001-0933')
+            @resolver.find('0040000')
+            @resolver.find('004-0000')
           ])
         .spread (result1, result2) ->
-          assert.ok @adapter.codePrefixes[0] == '001'
-          assert.ok @adapter.codePrefixes[1] == '001'
-          assert.ok @adapter.addressDicts['001'] != undefined
+          assert.ok @adapter.codePrefixes[0] == '004'
+          assert.ok @adapter.codePrefixes[1] == '004'
+          assert.ok @adapter.addressDicts['004'] != undefined
