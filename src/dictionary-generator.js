@@ -20,9 +20,12 @@ export default class DictionaryGenerator {
       area: area,
     };
 
-    const prefixAddresses = this.addresses.get(prefix) || new Map();
-    prefixAddresses.set(record.zip_code, data);
-    this.addresses.set(prefix, prefixAddresses);
+    const group = this.addresses.get(prefix) || new Map();
+    const addresses = group.get(record.zip_code) || [];
+    addresses.push(data);
+
+    group.set(record.zip_code, addresses);
+    this.addresses.set(prefix, group);
   }
   generate() {
     let chain = Promise.resolve();

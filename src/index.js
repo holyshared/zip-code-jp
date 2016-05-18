@@ -15,34 +15,7 @@ export const dict = {
   CacheableDictionaryLoader: CacheableDictionaryLoader
 };
 
-const EmptyResult = {
-  prefecture: null,
-  city: null,
-  area: null,
-  street: null
-};
-
 const readFile = Promise.promisify(fs.readFile);
-
-export class ResolvedResult {
-  constructor(prefecture, city, area, street = null) {
-    this.prefecture = prefecture;
-    this.city = city;
-    this.area = area;
-    this.street = street;
-  }
-  static fromObject(object) {
-    return new ResolvedResult(
-      object.prefecture,
-      object.city,
-      object.area,
-      object.street
-    );
-  }
-  static emptyResult() {
-    return Object.create(EmptyResult);
-  }
-}
 
 export default class AddressResolver {
   constructor(adapter = new MemoryCacheAdapter()) {
@@ -80,8 +53,8 @@ export default class AddressResolver {
       if (!dict[postalCode]) {
         return this.emptyResult();
       }
-      const address = dict[postalCode];
-      return ResolvedResult.fromObject(address);
+      const results = dict[postalCode] || null;
+      return results;
     });
   }
   emptyResult() {
