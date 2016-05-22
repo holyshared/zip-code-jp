@@ -26,8 +26,7 @@
   },
   "homepage": "https://github.com/holyshared/zip-code-jp#readme",
   "dependencies": {
-    "bluebird": "^3.4.0",
-    "es6-error": "^2.0.2"
+    "bluebird": "^3.4.0"
   },
   "devDependencies": {
     "babel-cli": "~6.9",
